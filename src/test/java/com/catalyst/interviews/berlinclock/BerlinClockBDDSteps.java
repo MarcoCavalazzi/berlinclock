@@ -8,9 +8,10 @@ import static org.junit.Assert.assertThat;
 
 public class BerlinClockBDDSteps {
 
-    private TimeConverter berlinClock;
+    private BerlinClock berlinClock = new BerlinClock();
     private String time;
-
+    private boolean debug=false;	// Variable used to activate or deactivate debugging I/O statements.
+    
     @Given("^the time is (.*)$")
     public void theTimeIs(String time) throws Throwable {
         this.time = time;
@@ -18,6 +19,9 @@ public class BerlinClockBDDSteps {
 
     @Then("^the clock should look like:$")
     public void theClockShouldLookLike(String expectedBerlinClockOutput) throws Throwable {
+    	if(debug) {
+    		System.out.println("expectedBerlinClockOutput:\n"+expectedBerlinClockOutput);
+    	}
         assertThat(berlinClock.convertTime(time), is(expectedBerlinClockOutput));
     }
 }
